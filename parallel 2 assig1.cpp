@@ -34,8 +34,8 @@ void convert_matrix_to_sparse_matrix(vector<vector<int>>&a,float s)
                 }
             }
         }
-void matrix_multiply(unordered_map<string,pair<pair<int,int>,int>>&x,unordered_map<string,pair<pair<int,int>,int>>&y,vector<vector<int>>&c)
-    {
+int matrix_multiply(unordered_map<string,pair<pair<int,int>,int>>&x,unordered_map<string,pair<pair<int,int>,int>>&y,vector<vector<int>>&c)
+    {   int count=0;
         for(auto i:x)
         {
             int r=i.second.first.first;int s=i.second.first.second;int t=i.second.second;
@@ -45,13 +45,14 @@ void matrix_multiply(unordered_map<string,pair<pair<int,int>,int>>&x,unordered_m
               if(s==r1)
               {
                   c[r][s1]+=t*t1;
+                  count++;
               }
             }
-        }
+        }return count;
     }
-   void matrixMultiply(vector<vector<int>>&A, vector<vector<int>>&B, vector<vector<int>>&C, int m, int n, int p)
+int matrixMultiply(vector<vector<int>>&A, vector<vector<int>>&B, vector<vector<int>>&C, int m, int n, int p)
 {
-    
+    int count=0; 
     for (int i = 0; i < m; i++)
     {
         for (int j = 0; j < p; j++)
@@ -60,8 +61,9 @@ void matrix_multiply(unordered_map<string,pair<pair<int,int>,int>>&x,unordered_m
             {
                 
                 C[i][j] += A[i][k] * B[k][j];
+               count++;
             }
-        }
+        }return count;
     }
     
 }
@@ -140,9 +142,9 @@ int main()
      
     
     vector<vector<int>>C(m,vector<int>(p));
-    clock_t start2 = clock();
-    matrixMultiply(a,b, C, m, n, p);
-    clock_t end2 = clock();
+    clock_t start1 = clock();
+    int count1=matrixMultiply(a,b, C, m, n, p);
+    clock_t end1 = clock();
     for(int i=0;i<m;i++)
     {
         for(int j=0;j<p;j++)
@@ -150,9 +152,9 @@ int main()
             cout<<C[i][j]<<" ";
         }
     }cout<<endl;
-     clock_t start1 = clock();
-    matrix_multiply(x,y,c);
-    clock_t end1 = clock();
+     clock_t start2 = clock();
+    int count2= matrix_multiply(x,y,c);
+    clock_t end2 = clock();
     for(int i=0;i<m;i++)
     {
         for(int j=0;j<p;j++)
@@ -160,6 +162,6 @@ int main()
             cout<<c[i][j]<<" ";
         }
     }cout<<endl;
-    cout << (end1 - start1) << "," << ","<< (end2 - start2) << ","  <<endl;
+    cout << (end1 - start1) << "," << count1 << ","<< (end2 - start2) << "," << count2 <<endl;
     
 }
